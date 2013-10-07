@@ -1,0 +1,4 @@
+name = GSB Custom Section Title
+description = Allows customized section titles.
+core = 7.x
+package = GSB
