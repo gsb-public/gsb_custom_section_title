@@ -43,6 +43,7 @@ function gsb_custom_section_title_form($form, &$form_state, $section_id = '_new'
  */
 function _gsb_custom_section_title_row_form($row, array $data) {
   // Form items should never be required for the "new" row.
+  $required = $row !== '_new';
   $form['id'] = array(
     '#type' => 'value',
     '#value' => $row,
@@ -50,7 +51,7 @@ function _gsb_custom_section_title_row_form($row, array $data) {
   $form['title'] = array(
     '#title' => t('Title'),
     '#type' => 'textfield',
-    '#required' => TRUE,
+    '#required' => $required,
     '#default_value' => $data['title'],
   );
   $form['link'] = array(
@@ -74,7 +75,7 @@ function _gsb_custom_section_title_row_form($row, array $data) {
     '#type' => 'textarea',
     '#default_value' => $data['paths'],
     '#rows' => 4,
-    '#required' => TRUE,
+    '#required' => $required,
   );
   return $form;
 }
