@@ -123,7 +123,7 @@ function gsb_custom_section_title_table($form, &$form_state) {
   foreach ($sections as $section_id => $section) {
     $row = array();
     $row[] = $section['title'];
-    $row[] = !empty($section['link']) ? $section['link_path'] : '';
+    $row[] = !empty($section['link']) ? l($section['link_path'], $section['link_path']) : '';
     $row[] = array('data' => array('#theme' => 'item_list', '#items' => explode("\n", $section['paths'])));
     $operations = array();
     $operations['edit'] = array(
