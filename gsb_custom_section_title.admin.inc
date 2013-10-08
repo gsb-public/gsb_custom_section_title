@@ -137,14 +137,10 @@ function gsb_custom_section_title_table($form, &$form_state) {
       ),
     );
     $operations['delete'] = array(
-      '#type' => 'link',
-      '#title' => t('Delete'),
-      '#href' => 'gsb_custom_section_title/nojs/delete/' . $section_id,
-      '#options' => array(
-        'attributes' => array('class' => array('use-ajax')),
-        'query' => array(
-          'token' => drupal_get_token($section_id),
-        ),
+      '#type' => 'button',
+      '#value' => t('Delete'),
+      '#ajax' => array(
+        'path' => 'gsb_custom_section_title/nojs/delete/' . $section_id . '/' . drupal_get_token($section_id),
       ),
     );
     $form['operations'][$section_id] = $operations;
@@ -196,11 +192,13 @@ function gsb_custom_section_title_edit_section($form, &$form_state) {
  *
  * @param int $id
  *   The unique identifier for this row.
+ * @param string $token
+ *   The secure token.
  * @param bool $js
  *   Whether this form was submitted via AJAX or not. Defaults to FALSE.
  */
-function gsb_custom_section_title_delete_section($id, $js = FALSE) {
-  if (isset($_GET['token']) && drupal_valid_token($_GET['token'], $id)) {
+function gsb_custom_section_title_delete_section($id, $token, $js = FALSE) {
+  if (drupal_valid_token($token, $id)) {
     $sections = gsb_custom_section_title_get_sections();
     unset($sections[$id]);
     gsb_custom_section_title_set_sections($sections);

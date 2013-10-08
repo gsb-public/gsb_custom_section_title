@@ -17,9 +17,9 @@ function gsb_custom_section_title_menu() {
     'access arguments' => array('administer custom section titles'),
     'file' => 'gsb_custom_section_title.admin.inc',
   );
-  $items['gsb_custom_section_title/%ctools_js/delete/%'] = array(
+  $items['gsb_custom_section_title/%ctools_js/delete/%/%'] = array(
     'page callback' => 'gsb_custom_section_title_delete_section',
-    'page arguments' => array(3, 1),
+    'page arguments' => array(3, 4, 1),
     'access arguments' => array('administer custom section titles'),
     'theme callback' => 'ajax_base_page_theme',
     'file' => 'gsb_custom_section_title.admin.inc',
