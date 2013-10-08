@@ -30,12 +30,6 @@ function gsb_custom_section_title_form($form, &$form_state, $section_id) {
     '#type' => 'submit',
     '#value' => $is_new ? t('Save section title') : t('Update section title'),
   );
-  $form['actions']['cancel'] = array(
-    '#type' => 'submit',
-    '#value' => t('Cancel'),
-    '#access' => !$is_new,
-    '#submit' => array('gsb_custom_section_title_form_cancel'),
-  );
   return $form;
 }
 
@@ -52,14 +46,14 @@ function gsb_custom_section_title_form($form, &$form_state, $section_id) {
  */
 function _gsb_custom_section_title_row_form($row, array $data) {
   // Form items should never be required for the "new" row.
-  $required = $row !== '_new';
+  $is_new = $row == '_new';
   $form['id'] = array(
     '#type' => 'hidden',
   );
   $form['title'] = array(
     '#title' => t('Title'),
     '#type' => 'textfield',
-    '#required' => $required,
+    '#required' => !$is_new,
     '#default_value' => $data['title'],
   );
   $form['link'] = array(
@@ -83,16 +77,15 @@ function _gsb_custom_section_title_row_form($row, array $data) {
     '#type' => 'textarea',
     '#default_value' => $data['paths'],
     '#rows' => 4,
-    '#required' => $required,
+    '#required' => !$is_new,
+  );
+  $form['actions']['cancel'] = array(
+    '#type' => 'link',
+    '#title' => t('Cancel'),
+    '#href' => 'admin/config/gsb/custom-section-title',
+    '#access' => !$is_new,
   );
   return $form;
-}
-
-/**
- * Form submission handler for gsb_custom_section_title_form().
- */
-function gsb_custom_section_title_form_cancel(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/config/gsb/custom-section-title';
 }
 
 /**
