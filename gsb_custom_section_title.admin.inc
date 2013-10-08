@@ -54,8 +54,7 @@ function _gsb_custom_section_title_row_form($row, array $data) {
   // Form items should never be required for the "new" row.
   $required = $row !== '_new';
   $form['id'] = array(
-    '#type' => 'value',
-    '#value' => $row,
+    '#type' => 'hidden',
   );
   $form['title'] = array(
     '#title' => t('Title'),
@@ -101,7 +100,22 @@ function gsb_custom_section_title_form_cancel(&$form, &$form_state) {
  */
 function gsb_custom_section_title_form_submit(&$form, &$form_state) {
   $sections = gsb_custom_section_title_get_sections();
-  $sections[] = $form_state['values']['sections']['_new'];
+  $new_section = $form_state['values']['sections']['_new'];
+  $count = count($sections);
+  // If this is a new section, make the ID the last key.
+  if ($new_section['id'] === '') {
+    $new_section['id'] = $count;
+  }
+  // If this section already exists, overwrite the old section.
+  if ($new_section['id'] < $count) {
+    $sections[$new_section['id']] = $new_section;
+    drupal_set_message(t('A section title named %title has been added.', array('%title' => $new_section['title'])));
+  }
+  // Otherwise, append it to the end.
+  else {
+    $sections[] = $new_section;
+    drupal_set_message(t('The section title named %title has been updated.', array('%title' => $new_section['title'])));
+  }
   gsb_custom_section_title_set_sections($sections);
 }
 
@@ -175,6 +189,7 @@ function gsb_custom_section_title_edit_section($form, &$form_state) {
   $section_id = str_replace('gsb-custom-section-title-', '', $form_state['triggering_element']['#name']);
   $replacement = drupal_get_form('gsb_custom_section_title_form', $section_id);
   $form['sections']['_new'] = $replacement['sections']['_new'];
+  $form['sections']['_new']['id']['#value'] = $section_id;
   return $form['sections'];
 }
 
