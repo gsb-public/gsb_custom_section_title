@@ -42,26 +42,33 @@ function gsb_custom_section_title_permission() {
 /**
  * Gets the custom section titles.
  *
- * @param null $key
- *   (optional) If specified, returns the section title for a given key.
- *
  * @return array
  *   An array of custom section titles.
  */
-function gsb_custom_section_title_get_sections($key = NULL) {
-  $data = variable_get('gsb_custom_section_title_sections', array());
-  if ($key !== NULL) {
-    if (!isset($data[$key])) {
-      $data[$key] = array(
-        'title' => '',
-        'link' => FALSE,
-        'link_path' => '',
-        'paths' => '',
-      );
-    }
-    return $data[$key];
+function gsb_custom_section_title_get_sections() {
+  return variable_get('gsb_custom_section_title_sections', array());
+}
+
+/**
+ * Gets the custom section title for a given key.
+ *
+ * @param int|string $key
+ *   The specific section.
+ *
+ * @return array
+ *   An array representing the custom section title.
+ */
+function gsb_custom_section_title_get_section($key) {
+  $sections = gsb_custom_section_title_get_sections();
+  if (!isset($sections[$key])) {
+    $sections[$key] = array(
+      'title' => '',
+      'link' => FALSE,
+      'link_path' => '',
+      'paths' => '',
+    );
   }
-  return $data;
+  return $sections[$key];
 }
 
 /**

@@ -16,7 +16,7 @@ function gsb_custom_section_title_overview($section_id = '_new') {
 function gsb_custom_section_title_form($form, &$form_state, $section_id) {
   $form['#tree'] = TRUE;
   $is_new = $section_id === '_new';
-  $section = gsb_custom_section_title_get_sections($section_id);
+  $section = gsb_custom_section_title_get_section($section_id);
   $form['sections'] = array(
     '#title' => $is_new ? t('Add new section title') : t('Edit section title'),
     '#type' => 'fieldset',
