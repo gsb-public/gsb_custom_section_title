@@ -14,20 +14,29 @@ function gsb_custom_section_title_menu() {
     'title' => 'Custom Section Titles',
     'description' => 'Manage custom section titles',
     'page callback' => 'gsb_custom_section_title_overview',
-    // @todo.
-    'access callback' => TRUE,
+    'access arguments' => array('administer custom section titles'),
     'file' => 'gsb_custom_section_title.admin.inc',
   );
   $items['gsb_custom_section_title/%ctools_js/delete/%'] = array(
     'page callback' => 'gsb_custom_section_title_delete_section',
     'page arguments' => array(3, 1),
-    // @todo.
-    'access callback' => TRUE,
+    'access arguments' => array('administer custom section titles'),
     'theme callback' => 'ajax_base_page_theme',
     'file' => 'gsb_custom_section_title.admin.inc',
     'type' => MENU_CALLBACK,
   );
   return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function gsb_custom_section_title_permission() {
+  return array(
+    'administer custom section titles' => array(
+      'title' => t('Administer custom section titles'),
+    ),
+  );
 }
 
 /**
