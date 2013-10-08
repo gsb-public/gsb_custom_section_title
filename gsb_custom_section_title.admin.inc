@@ -124,9 +124,10 @@ function gsb_custom_section_title_form_submit(&$form, &$form_state) {
  */
 function gsb_custom_section_title_table($form, &$form_state) {
   $form['#attached']['library'][] = array('system', 'drupal.ajax');
-  drupal_add_library('system', 'drupal.ajax');
   $rows = array();
-  foreach (gsb_custom_section_title_get_sections() as $section_id => $section) {
+  $sections = gsb_custom_section_title_get_sections();
+  uasort($sections, 'drupal_sort_title');
+  foreach ($sections as $section_id => $section) {
     $row = array();
     $row[] = $section['title'];
     $row[] = !empty($section['link']) ? $section['link_path'] : '';
@@ -154,7 +155,7 @@ function gsb_custom_section_title_table($form, &$form_state) {
       ),
     );
     $form['operations'][$section_id] = $operations;
-    $rows[] = array('data' => $row, 'id' => "gsb-custom-section-title-$section_id");
+    $rows[$section_id] = array('data' => $row, 'id' => "gsb-custom-section-title-$section_id");
   }
 
   if (!empty($rows)) {
