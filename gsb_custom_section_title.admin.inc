@@ -92,7 +92,7 @@ function _gsb_custom_section_title_row_form($row, array $data) {
  * Form submission handler for gsb_custom_section_title_form().
  */
 function gsb_custom_section_title_form_cancel(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/config/user-interface/gsb-custom-section-title';
+  $form_state['redirect'] = 'admin/config/gsb/custom-section-title';
 }
 
 /**
@@ -217,6 +217,6 @@ function gsb_custom_section_title_delete_section($id, $js = FALSE) {
     }
   }
   else {
-    drupal_goto('admin/config/user-interface/gsb-custom-section-title');
+    drupal_goto('admin/config/gsb/custom-section-title');
   }
 }

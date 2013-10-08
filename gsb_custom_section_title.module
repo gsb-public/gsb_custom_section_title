@@ -10,8 +10,8 @@
  */
 function gsb_custom_section_title_menu() {
   $items = array();
-  $items['admin/config/user-interface/gsb-custom-section-title'] = array(
-    'title' => 'GSB Custom Section Titles',
+  $items['admin/config/gsb/custom-section-title'] = array(
+    'title' => 'Custom Section Titles',
     'description' => 'Manage custom section titles',
     'page callback' => 'gsb_custom_section_title_overview',
     // @todo.
