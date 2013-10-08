@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @todo.
+ * Page callback: Presents the section title table and form.
  */
 function gsb_custom_section_title_overview($section_id = '_new') {
   return array(
@@ -113,7 +113,7 @@ function gsb_custom_section_title_form_submit(&$form, &$form_state) {
 }
 
 /**
- * @todo.
+ * Form constructor for the custom section titles table.
  */
 function gsb_custom_section_title_table($form, &$form_state) {
   $form['#attached']['library'][] = array('system', 'drupal.ajax');
@@ -167,6 +167,10 @@ function gsb_custom_section_title_table($form, &$form_state) {
 
   return $form;
 }
+
+/**
+ * Returns HTML for the custom section title table.
+ */
 function theme_gsb_custom_section_title_table($variables) {
   $form = $variables['form'];
   foreach (element_children($form['operations']) as $key) {
