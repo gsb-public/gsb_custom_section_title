@@ -45,15 +45,13 @@ function gsb_custom_section_title_form($form, &$form_state, $section_id) {
  *   The form item for a single section title row.
  */
 function _gsb_custom_section_title_row_form($row, array $data) {
-  // Form items should never be required for the "new" row.
-  $is_new = $row == '_new';
   $form['id'] = array(
     '#type' => 'hidden',
   );
   $form['title'] = array(
     '#title' => t('Title'),
     '#type' => 'textfield',
-    '#required' => !$is_new,
+    '#required' => TRUE,
     '#default_value' => $data['title'],
   );
   $form['link'] = array(
@@ -77,13 +75,13 @@ function _gsb_custom_section_title_row_form($row, array $data) {
     '#type' => 'textarea',
     '#default_value' => $data['paths'],
     '#rows' => 4,
-    '#required' => !$is_new,
+    '#required' => TRUE,
   );
   $form['actions']['cancel'] = array(
     '#type' => 'link',
     '#title' => t('Cancel'),
     '#href' => 'admin/config/gsb/custom-section-title',
-    '#access' => !$is_new,
+    '#access' => $row !== '_new',
   );
   return $form;
 }
