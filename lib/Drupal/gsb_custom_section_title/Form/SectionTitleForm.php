@@ -34,7 +34,7 @@ class SectionTitleForm extends FormBase {
       '#attributes' => array(
         'id' => 'gsb-custom-section-title-fieldset',
       ),
-      '_new' => _gsb_custom_section_title_row_form($section_id, $section),
+      '_new' => $this->getRowForm($section_id, $section),
     );
     $form['actions'] = array('#type' => 'actions');
     $form['actions']['submit'] = array(
@@ -48,7 +48,7 @@ class SectionTitleForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, array &$form_state) {
-    $sections = gsb_custom_section_title_get_sections();
+    $sections = $this->config('gsb_custom_section_title.settings')->get('sections');
     $new_section = $form_state['values']['sections']['_new'];
     $count = count($sections);
     // If this is a new section, make the ID the last key.
@@ -66,6 +66,59 @@ class SectionTitleForm extends FormBase {
       drupal_set_message(t('The section title named %title has been updated.', array('%title' => $new_section['title'])));
     }
     gsb_custom_section_title_set_sections($sections);
+  }
+
+  /**
+   * Generates the section title form item for a single row.
+   *
+   * @param string|int $row
+   *   The unique identifier for this row. Either an integer or '_new'.
+   * @param array $data
+   *   The data for this row.
+   *
+   * @return array
+   *   The form item for a single section title row.
+   */
+  protected function getRowForm($row, array $data) {
+    $form['id'] = array(
+      '#type' => 'hidden',
+    );
+    $form['title'] = array(
+      '#title' => t('Title'),
+      '#type' => 'textfield',
+      '#required' => TRUE,
+      '#default_value' => $data['title'],
+    );
+    $form['link'] = array(
+      '#title' => t('Link?'),
+      '#type' => 'checkbox',
+      '#default_value' => $data['link'],
+    );
+    $form['link_path'] = array(
+      '#title' => t('Link path'),
+      '#type' => 'textfield',
+      '#field_prefix' => url(NULL, array('absolute' => TRUE)),
+      '#default_value' => $data['link_path'],
+      '#states' => array(
+        'visible' => array(
+          ':input[name="sections[' . $row . '][link]"]' => array('checked' => TRUE),
+        ),
+      ),
+    );
+    $form['paths'] = array(
+      '#title' => t('Paths'),
+      '#type' => 'textarea',
+      '#default_value' => $data['paths'],
+      '#rows' => 4,
+      '#required' => TRUE,
+    );
+    $form['actions']['cancel'] = array(
+      '#type' => 'link',
+      '#title' => t('Cancel'),
+      '#href' => 'admin/config/gsb/custom-section-title',
+      '#access' => $row !== '_new',
+    );
+    return $form;
   }
 
 }

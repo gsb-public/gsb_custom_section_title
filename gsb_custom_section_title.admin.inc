@@ -1,112 +1,6 @@
 <?php
 
 /**
- * Generates the section title form item for a single row.
- *
- * @param string|int $row
- *   The unique identifier for this row. Either an integer or '_new'.
- * @param array $data
- *   The data for this row.
- *
- * @return array
- *   The form item for a single section title row.
- */
-function _gsb_custom_section_title_row_form($row, array $data) {
-  $form['id'] = array(
-    '#type' => 'hidden',
-  );
-  $form['title'] = array(
-    '#title' => t('Title'),
-    '#type' => 'textfield',
-    '#required' => TRUE,
-    '#default_value' => $data['title'],
-  );
-  $form['link'] = array(
-    '#title' => t('Link?'),
-    '#type' => 'checkbox',
-    '#default_value' => $data['link'],
-  );
-  $form['link_path'] = array(
-    '#title' => t('Link path'),
-    '#type' => 'textfield',
-    '#field_prefix' => url(NULL, array('absolute' => TRUE)),
-    '#default_value' => $data['link_path'],
-    '#states' => array(
-      'visible' => array(
-        ':input[name="sections[' . $row . '][link]"]' => array('checked' => TRUE),
-      ),
-    ),
-  );
-  $form['paths'] = array(
-    '#title' => t('Paths'),
-    '#type' => 'textarea',
-    '#default_value' => $data['paths'],
-    '#rows' => 4,
-    '#required' => TRUE,
-  );
-  $form['actions']['cancel'] = array(
-    '#type' => 'link',
-    '#title' => t('Cancel'),
-    '#href' => 'admin/config/gsb/custom-section-title',
-    '#access' => $row !== '_new',
-  );
-  return $form;
-}
-
-
-/**
- * Form constructor for the custom section titles table.
- */
-function gsb_custom_section_title_table($form, &$form_state) {
-  $form['#attached']['library'][] = array('system', 'drupal.ajax');
-  $rows = array();
-  $sections = gsb_custom_section_title_get_sections();
-  uasort($sections, 'drupal_sort_title');
-  foreach ($sections as $section_id => $section) {
-    $row = array();
-    $row[] = $section['title'];
-    $row[] = !empty($section['link']) ? l($section['link_path'], $section['link_path']) : '';
-    $row[] = array('data' => array('#theme' => 'item_list', '#items' => explode("\n", $section['paths'])));
-    $operations = array();
-    $operations['edit'] = array(
-      '#type' => 'button',
-      '#value' => t('Edit'),
-      '#name' => "gsb-custom-section-title-$section_id",
-      '#ajax' => array(
-        'callback' => 'gsb_custom_section_title_edit_section',
-        'wrapper' => 'gsb-custom-section-title-fieldset .fieldset-wrapper',
-        'method' => 'html',
-      ),
-    );
-    $operations['delete'] = array(
-      '#type' => 'button',
-      '#value' => t('Delete'),
-      '#ajax' => array(
-        'path' => 'gsb_custom_section_title/nojs/delete/' . $section_id . '/' . drupal_get_token($section_id),
-      ),
-    );
-    $form['operations'][$section_id] = $operations;
-    $rows[$section_id] = array('data' => $row, 'id' => "gsb-custom-section-title-$section_id");
-  }
-
-  if (!empty($rows)) {
-    $form['table'] = array(
-      '#theme' => 'table',
-      '#header' => array(
-        t('Title'),
-        t('Link'),
-        t('Paths'),
-        t('Operations'),
-      ),
-      '#rows' => $rows,
-      '#attributes' => array('id' => 'gsb-custom-section-title-table'),
-    );
-  }
-
-  return $form;
-}
-
-/**
  * Returns HTML for the custom section title table.
  */
 function theme_gsb_custom_section_title_table($variables) {
@@ -143,7 +37,7 @@ function gsb_custom_section_title_edit_section($form, &$form_state) {
  */
 function gsb_custom_section_title_delete_section($id, $token, $js = FALSE) {
   if (drupal_valid_token($token, $id)) {
-    $sections = gsb_custom_section_title_get_sections();
+    $sections = \Drupal::config('gsb_custom_section_title.settings')->get('sections');
     unset($sections[$id]);
     gsb_custom_section_title_set_sections($sections);
     if ($js) {

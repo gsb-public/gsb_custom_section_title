@@ -30,16 +30,6 @@ function gsb_custom_section_title_permission() {
 }
 
 /**
- * Gets the custom section titles.
- *
- * @return array
- *   An array of custom section titles.
- */
-function gsb_custom_section_title_get_sections() {
-  return \Drupal::config('gsb_custom_section_title.settings')->get('sections');
-}
-
-/**
  * Gets the custom section title for a given key.
  *
  * @param int|string $key
@@ -49,7 +39,7 @@ function gsb_custom_section_title_get_sections() {
  *   An array representing the custom section title.
  */
 function gsb_custom_section_title_get_section($key) {
-  $sections = gsb_custom_section_title_get_sections();
+  $sections = \Drupal::config('gsb_custom_section_title.settings')->get('sections');
   if (!isset($sections[$key])) {
     $sections[$key] = array(
       'title' => '',
@@ -78,10 +68,11 @@ function gsb_custom_section_title_set_sections(array $sections) {
 /**
  * Implements hook_theme().
  */
-function gsb_custom_section_title_theme() {
+function gsb_custom_section_title_theme($existing, $type, $theme, $path) {
   return array(
     'gsb_custom_section_title_table' => array(
       'render element' => 'form',
+      'file' => 'gsb_custom_section_title.admin.inc',
     ),
   );
 }
