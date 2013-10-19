@@ -40,9 +40,10 @@ class SectionTitleController extends ControllerBase {
    */
   public function deleteSection($id, $token, $js) {
     if (\Drupal::csrfToken()->validate($token, $id)) {
-      $sections = $this->config('gsb_custom_section_title.settings')->get('sections');
+      $config = $this->config('gsb_custom_section_title.settings');
+      $sections = $config->get('sections');
       unset($sections[$id]);
-      gsb_custom_section_title_set_sections($sections);
+      $config->set('sections', $sections);
       if ($js) {
         // If there are no more sections, remove the whole table.
         if (empty($sections)) {
