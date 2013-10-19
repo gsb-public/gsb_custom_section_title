@@ -8,6 +8,8 @@ gsb_custom_section_title.configure:
 
 gsb_custom_section_title.delete_section:
   path: '/gsb_custom_section_title/{js}/delete/{id}/{token}'
+  defaults:
+    _controller: '\Drupal\gsb_custom_section_title\Controller\SectionTitleController::deleteSection'
   requirements:
     _permission: 'administer custom section titles'
     js: 'nojs|ajax'
