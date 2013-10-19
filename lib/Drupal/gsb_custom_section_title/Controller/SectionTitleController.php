@@ -47,7 +47,7 @@ class SectionTitleController extends ControllerBase {
       $response->addCommand(new RemoveCommand("#gsb-custom-section-title-$id"));
       return $response;
     }
-    return $this->redirect('gsb_custom_section_title.list');
+    return $this->redirect('gsb_custom_section_title.configure');
   }
 
   /**
@@ -64,7 +64,7 @@ class SectionTitleController extends ControllerBase {
     if (\Drupal::csrfToken()->validate($token, $id)) {
       $this->deleteSection($id);
     }
-    return $this->redirect('gsb_custom_section_title.list');
+    return $this->redirect('gsb_custom_section_title.configure');
   }
 
   /**
