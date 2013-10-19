@@ -34,10 +34,18 @@ gsb_custom_section_title.configure:
   requirements:
     _permission: 'administer custom section titles'
 
-gsb_custom_section_title.delete_section:
-  path: '/gsb_custom_section_title/{js}/delete/{id}/{token}'
+gsb_custom_section_title.delete_section_ajax:
+  path: '/gsb_custom_section_title/delete/{id}/{token}'
   defaults:
-    _controller: '\Drupal\gsb_custom_section_title\Controller\SectionTitleController::deleteSection'
+    _controller: '\Drupal\gsb_custom_section_title\Controller\SectionTitleController::deleteSectionAjax'
   requirements:
+    _format: drupal_ajax
     _permission: 'administer custom section titles'
-    js: 'nojs|ajax'
+
+gsb_custom_section_title.delete_section_nojs:
+  path: '/gsb_custom_section_title/delete/{id}/{token}'
+  defaults:
+    _controller: '\Drupal\gsb_custom_section_title\Controller\SectionTitleController::deleteSectionNojs'
+  requirements:
+    _format: html
+    _permission: 'administer custom section titles'

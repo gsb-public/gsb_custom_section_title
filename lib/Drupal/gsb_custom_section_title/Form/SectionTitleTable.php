@@ -49,7 +49,7 @@ class SectionTitleTable extends FormBase {
         '#type' => 'button',
         '#value' => $this->t('Delete'),
         '#ajax' => array(
-          'path' => 'gsb_custom_section_title/nojs/delete/' . $section_id . '/' . \Drupal::csrfToken()->get($section_id),
+          'path' => 'gsb_custom_section_title/delete/' . $section_id . '/' . \Drupal::csrfToken()->get($section_id),
         ),
       );
       $form['operations'][$section_id] = $operations;

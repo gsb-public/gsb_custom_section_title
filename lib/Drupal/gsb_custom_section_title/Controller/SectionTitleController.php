@@ -27,34 +27,62 @@ class SectionTitleController extends ControllerBase {
   }
 
   /**
-   * Deletes a section title.
+   * Deletes a section title when called via AJAX.
    *
    * @param int $id
    *   The unique identifier for this row.
    * @param string $token
    *   The secure token.
-   * @param bool $js
-   *   Whether this form was submitted via AJAX or not. Defaults to FALSE.
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
    */
-  public function deleteSection($id, $token, $js) {
+  public function deleteSectionAjax($id, $token) {
     if (\Drupal::csrfToken()->validate($token, $id)) {
-      $config = $this->config('gsb_custom_section_title.settings');
-      $sections = $config->get('sections');
-      unset($sections[$id]);
-      $config->set('sections', $sections)->save();
-      if ($js) {
-        // If there are no more sections, remove the whole table.
-        if (empty($sections)) {
-          $id = 'table';
-        }
-        $response = new AjaxResponse();
-        $response->addCommand(new RemoveCommand("#gsb-custom-section-title-$id"));
-        return $response;
+      $sections = $this->deleteSection($id);
+      // If there are no more sections, remove the whole table.
+      if (empty($sections)) {
+        $id = 'table';
       }
+      $response = new AjaxResponse();
+      $response->addCommand(new RemoveCommand("#gsb-custom-section-title-$id"));
+      return $response;
     }
     return $this->redirect('gsb_custom_section_title.list');
+  }
+
+  /**
+   * Deletes a section title when called directly.
+   *
+   * @param int $id
+   *   The unique identifier for this row.
+   * @param string $token
+   *   The secure token.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   */
+  public function deleteSectionNojs($id, $token) {
+    if (\Drupal::csrfToken()->validate($token, $id)) {
+      $this->deleteSection($id);
+    }
+    return $this->redirect('gsb_custom_section_title.list');
+  }
+
+  /**
+   * Deletes a section title.
+   *
+   * @param $id
+   *   The section title being deleted.
+   *
+   * @return array
+   *   The remaining section titles.
+   */
+  protected function deleteSection($id) {
+    $config = $this->config('gsb_custom_section_title.settings');
+    $sections = $config->get('sections');
+    unset($sections[$id]);
+    $config->set('sections', $sections);
+    //$config->set('sections', $sections)->save();
+    return $sections;
   }
 
 }
