@@ -1,0 +1,5 @@
+gsb_custom_section_title.add:
+  route_name: gsb_custom_section_title.add
+  title: 'Add section title'
+  appears_on:
+    - gsb_custom_section_title.configure

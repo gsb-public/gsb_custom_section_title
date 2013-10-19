@@ -1,3 +1,24 @@
+gsb_custom_section_title.add:
+  path: '/admin/config/gsb/custom-section-title/add'
+  defaults:
+    _entity_form: 'gsb_custom_section_title.add'
+  requirements:
+    _permission: 'administer custom section titles'
+
+gsb_custom_section_title.edit:
+  path: '/admin/config/gsb/custom-section-title/manage/{gsb_custom_section_title}'
+  defaults:
+    _entity_form: 'gsb_custom_section_title.edit'
+  requirements:
+    _permission: 'administer custom section titles'
+
+gsb_custom_section_title.delete:
+  path: '/admin/config/gsb/custom-section-title/manage/{gsb_custom_section_title}/delete'
+  defaults:
+    _entity_form: 'gsb_custom_section_title.delete'
+  requirements:
+    _permission: 'administer custom section titles'
+
 gsb_custom_section_title.configure:
   path: '/admin/config/gsb/custom-section-title/{section_id}'
   defaults:
