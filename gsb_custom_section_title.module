@@ -36,7 +36,7 @@ function gsb_custom_section_title_permission() {
  *   An array of custom section titles.
  */
 function gsb_custom_section_title_get_sections() {
-  return variable_get('gsb_custom_section_title_sections', array());
+  return \Drupal::config('gsb_custom_section_title.settings')->get('sections');
 }
 
 /**
@@ -72,7 +72,7 @@ function gsb_custom_section_title_set_sections(array $sections) {
   foreach ($sections as $key => $section) {
     $section['id'] = $key;
   }
-  variable_set('gsb_custom_section_title_sections', $sections);
+  \Drupal::config('gsb_custom_section_title.settings')->set('sections', $sections)->save();
 }
 
 /**
