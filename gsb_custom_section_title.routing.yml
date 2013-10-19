@@ -5,3 +5,9 @@ gsb_custom_section_title.configure:
     section_id: '_new'
   requirements:
     _permission: 'administer custom section titles'
+
+gsb_custom_section_title.delete_section:
+  path: '/gsb_custom_section_title/{js}/delete/{id}/{token}'
+  requirements:
+    _permission: 'administer custom section titles'
+    js: 'nojs|ajax'

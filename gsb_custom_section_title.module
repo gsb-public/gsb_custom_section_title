@@ -15,14 +15,6 @@ function gsb_custom_section_title_menu() {
     'description' => 'Manage custom section titles',
     'route_name' => 'gsb_custom_section_title.configure',
   );
-  $items['gsb_custom_section_title/%ctools_js/delete/%/%'] = array(
-    'page callback' => 'gsb_custom_section_title_delete_section',
-    'page arguments' => array(3, 4, 1),
-    'access arguments' => array('administer custom section titles'),
-    'theme callback' => 'ajax_base_page_theme',
-    'file' => 'gsb_custom_section_title.admin.inc',
-    'type' => MENU_CALLBACK,
-  );
   return $items;
 }
 
