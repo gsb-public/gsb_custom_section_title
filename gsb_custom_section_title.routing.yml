@@ -1,0 +1,7 @@
+gsb_custom_section_title.configure:
+  path: '/admin/config/gsb/custom-section-title/{section_id}'
+  defaults:
+    _content: '\Drupal\gsb_custom_section_title\Controller\SectionTitleController::overview'
+    section_id: '_new'
+  requirements:
+    _permission: 'administer custom section titles'

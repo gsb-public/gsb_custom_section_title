@@ -1,0 +1,5 @@
+name: GSB Custom Section Title
+description: Allows customized section titles.
+type: module
+core: 8.x
+package: GSB

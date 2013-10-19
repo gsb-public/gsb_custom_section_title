@@ -1,16 +1,6 @@
 <?php
 
 /**
- * Page callback: Presents the section title table and form.
- */
-function gsb_custom_section_title_overview($section_id = '_new') {
-  return array(
-    'table' => drupal_get_form('gsb_custom_section_title_table'),
-    'section' => drupal_get_form('gsb_custom_section_title_form', $section_id),
-  );
-}
-
-/**
  * Form constructor for the custom section titles form.
  */
 function gsb_custom_section_title_form($form, &$form_state, $section_id) {
