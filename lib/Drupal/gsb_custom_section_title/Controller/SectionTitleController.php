@@ -21,7 +21,7 @@ class SectionTitleController extends ControllerBase {
     module_load_include('admin.inc', 'gsb_custom_section_title');
     return array(
       'table' => drupal_get_form('gsb_custom_section_title_table'),
-      'section' => drupal_get_form('gsb_custom_section_title_form', $section_id),
+      'section' => drupal_get_form('Drupal\gsb_custom_section_title\Form\SectionTitleForm', $section_id),
     );
   }
 
