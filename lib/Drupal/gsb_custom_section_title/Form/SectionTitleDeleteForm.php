@@ -26,7 +26,7 @@ class SectionTitleDeleteForm extends EntityConfirmFormBase {
    */
   public function getCancelRoute() {
     return array(
-      'route_name' => 'gsb_custom_section_title.configure',
+      'route_name' => 'gsb_custom_section_title.list',
     );
   }
 

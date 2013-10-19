@@ -1,3 +1,10 @@
+gsb_custom_section_title.list:
+  path: '/admin/config/gsb/custom-section-title'
+  defaults:
+    _entity_list: 'gsb_custom_section_title'
+  requirements:
+    _permission: 'administer custom section titles'
+
 gsb_custom_section_title.add:
   path: '/admin/config/gsb/custom-section-title/add'
   defaults:
@@ -20,7 +27,7 @@ gsb_custom_section_title.delete:
     _permission: 'administer custom section titles'
 
 gsb_custom_section_title.configure:
-  path: '/admin/config/gsb/custom-section-title/{section_id}'
+  path: '/admin/config/gsb/gsb-custom-section-title/{section_id}'
   defaults:
     _content: '\Drupal\gsb_custom_section_title\Controller\SectionTitleController::overview'
     section_id: '_new'

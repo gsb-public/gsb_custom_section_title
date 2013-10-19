@@ -20,11 +20,8 @@ class SectionTitleController extends ControllerBase {
    * Presents the section title table and form.
    */
   public function overview($section_id) {
-    $entity = entity_create('gsb_custom_section_title', array());
     return array(
-      'list' => $this->entityManager()->getListController('gsb_custom_section_title')->render(),
       'table' => drupal_get_form('Drupal\gsb_custom_section_title\Form\SectionTitleTable'),
-      'add' => $this->entityManager()->getForm($entity, 'add'),
       'section' => drupal_get_form('Drupal\gsb_custom_section_title\Form\SectionTitleForm', $section_id),
     );
   }
@@ -57,7 +54,7 @@ class SectionTitleController extends ControllerBase {
         return $response;
       }
     }
-    return $this->redirect('gsb_custom_section_title.configure');
+    return $this->redirect('gsb_custom_section_title.list');
   }
 
 }

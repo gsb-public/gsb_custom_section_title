@@ -155,7 +155,7 @@ class SectionTitleForm extends FormBase {
     $form['actions']['cancel'] = array(
       '#type' => 'link',
       '#title' => $this->t('Cancel'),
-      '#route_name' => 'gsb_custom_section_title.configure',
+      '#route_name' => 'gsb_custom_section_title.list',
       '#access' => $row !== '_new',
     );
     return $form;

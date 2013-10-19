@@ -13,7 +13,7 @@ function gsb_custom_section_title_menu() {
   $items['admin/config/gsb/custom-section-title'] = array(
     'title' => 'Custom Section Titles',
     'description' => 'Manage custom section titles',
-    'route_name' => 'gsb_custom_section_title.configure',
+    'route_name' => 'gsb_custom_section_title.list',
   );
   return $items;
 }
