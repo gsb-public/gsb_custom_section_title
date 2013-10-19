@@ -30,42 +30,6 @@ function gsb_custom_section_title_permission() {
 }
 
 /**
- * Gets the custom section title for a given key.
- *
- * @param int|string $key
- *   The specific section.
- *
- * @return array
- *   An array representing the custom section title.
- */
-function gsb_custom_section_title_get_section($key) {
-  $sections = \Drupal::config('gsb_custom_section_title.settings')->get('sections');
-  if (!isset($sections[$key])) {
-    $sections[$key] = array(
-      'title' => '',
-      'link' => FALSE,
-      'link_path' => '',
-      'paths' => '',
-    );
-  }
-  return $sections[$key];
-}
-
-/**
- * Sets the custom section titles.
- *
- * @param array $sections
- *   An array of custom section titles.
- */
-function gsb_custom_section_title_set_sections(array $sections) {
-  $sections = array_values($sections);
-  foreach ($sections as $key => $section) {
-    $section['id'] = $key;
-  }
-  \Drupal::config('gsb_custom_section_title.settings')->set('sections', $sections)->save();
-}
-
-/**
  * Implements hook_theme().
  */
 function gsb_custom_section_title_theme($existing, $type, $theme, $path) {

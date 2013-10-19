@@ -15,6 +15,20 @@ use Drupal\Core\Form\FormBase;
 class SectionTitleForm extends FormBase {
 
   /**
+   * The config object.
+   *
+   * @var \Drupal\Core\Config\Config
+   */
+  protected $config;
+
+  /**
+   * Constructs a new SectionTitleForm.
+   */
+  public function __construct() {
+    $this->config = $this->config('gsb_custom_section_title.settings');
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function getFormId() {
@@ -27,7 +41,7 @@ class SectionTitleForm extends FormBase {
   public function buildForm(array $form, array &$form_state, $section_id = NULL) {
     $form['#tree'] = TRUE;
     $is_new = $section_id === '_new';
-    $section = gsb_custom_section_title_get_section($section_id);
+    $section = $this->getSection($section_id);
     $form['sections'] = array(
       '#title' => $is_new ? t('Add new section title') : t('Edit section title'),
       '#type' => 'fieldset',
@@ -45,10 +59,32 @@ class SectionTitleForm extends FormBase {
   }
 
   /**
+   * Gets the custom section title for a given key.
+   *
+   * @param int|string $section_id
+   *   The specific section.
+   *
+   * @return array
+   *   An array representing the custom section title.
+   */
+  protected function getSection($section_id) {
+    $sections = $this->config->get('sections');
+    if (!isset($sections[$section_id])) {
+      $sections[$section_id] = array(
+        'title' => '',
+        'link' => FALSE,
+        'link_path' => '',
+        'paths' => '',
+      );
+    }
+    return $sections[$section_id];
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, array &$form_state) {
-    $sections = $this->config('gsb_custom_section_title.settings')->get('sections');
+    $sections = $this->config->get('sections');
     $new_section = $form_state['values']['sections']['_new'];
     $count = count($sections);
     // If this is a new section, make the ID the last key.
@@ -65,7 +101,11 @@ class SectionTitleForm extends FormBase {
       $sections[] = $new_section;
       drupal_set_message(t('The section title named %title has been updated.', array('%title' => $new_section['title'])));
     }
-    gsb_custom_section_title_set_sections($sections);
+    $sections = array_values($sections);
+    foreach ($sections as $key => &$section) {
+      $section['id'] = $key;
+    }
+    $this->config->set('sections', $sections)->save();
   }
 
   /**
