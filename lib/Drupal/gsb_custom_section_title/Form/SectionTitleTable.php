@@ -37,7 +37,7 @@ class SectionTitleTable extends FormBase {
       $operations = array();
       $operations['edit'] = array(
         '#type' => 'button',
-        '#value' => t('Edit'),
+        '#value' => $this->t('Edit'),
         '#name' => "gsb-custom-section-title-$section_id",
         '#ajax' => array(
           'callback' => array($this, 'editSection'),
@@ -47,9 +47,9 @@ class SectionTitleTable extends FormBase {
       );
       $operations['delete'] = array(
         '#type' => 'button',
-        '#value' => t('Delete'),
+        '#value' => $this->t('Delete'),
         '#ajax' => array(
-          'path' => 'gsb_custom_section_title/nojs/delete/' . $section_id . '/' . drupal_get_token($section_id),
+          'path' => 'gsb_custom_section_title/nojs/delete/' . $section_id . '/' . \Drupal::csrfToken()->get($section_id),
         ),
       );
       $form['operations'][$section_id] = $operations;
@@ -60,10 +60,10 @@ class SectionTitleTable extends FormBase {
       $form['table'] = array(
         '#theme' => 'table',
         '#header' => array(
-          t('Title'),
-          t('Link'),
-          t('Paths'),
-          t('Operations'),
+          $this->t('Title'),
+          $this->t('Link'),
+          $this->t('Paths'),
+          $this->t('Operations'),
         ),
         '#rows' => $rows,
         '#attributes' => array('id' => 'gsb-custom-section-title-table'),

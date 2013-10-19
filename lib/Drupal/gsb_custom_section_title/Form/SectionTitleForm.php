@@ -43,7 +43,7 @@ class SectionTitleForm extends FormBase {
     $is_new = $section_id === '_new';
     $section = $this->getSection($section_id);
     $form['sections'] = array(
-      '#title' => $is_new ? t('Add new section title') : t('Edit section title'),
+      '#title' => $is_new ? $this->t('Add new section title') : $this->t('Edit section title'),
       '#type' => 'fieldset',
       '#attributes' => array(
         'id' => 'gsb-custom-section-title-fieldset',
@@ -53,7 +53,7 @@ class SectionTitleForm extends FormBase {
     $form['actions'] = array('#type' => 'actions');
     $form['actions']['submit'] = array(
       '#type' => 'submit',
-      '#value' => $is_new ? t('Save section title') : t('Update section title'),
+      '#value' => $is_new ? $this->t('Save section title') : $this->t('Update section title'),
     );
     return $form;
   }
@@ -94,12 +94,12 @@ class SectionTitleForm extends FormBase {
     // If this section already exists, overwrite the old section.
     if ($new_section['id'] < $count) {
       $sections[$new_section['id']] = $new_section;
-      drupal_set_message(t('A section title named %title has been added.', array('%title' => $new_section['title'])));
+      drupal_set_message($this->t('A section title named %title has been added.', array('%title' => $new_section['title'])));
     }
     // Otherwise, append it to the end.
     else {
       $sections[] = $new_section;
-      drupal_set_message(t('The section title named %title has been updated.', array('%title' => $new_section['title'])));
+      drupal_set_message($this->t('The section title named %title has been updated.', array('%title' => $new_section['title'])));
     }
     $sections = array_values($sections);
     foreach ($sections as $key => &$section) {
@@ -124,18 +124,18 @@ class SectionTitleForm extends FormBase {
       '#type' => 'hidden',
     );
     $form['title'] = array(
-      '#title' => t('Title'),
+      '#title' => $this->t('Title'),
       '#type' => 'textfield',
       '#required' => TRUE,
       '#default_value' => $data['title'],
     );
     $form['link'] = array(
-      '#title' => t('Link?'),
+      '#title' => $this->t('Link?'),
       '#type' => 'checkbox',
       '#default_value' => $data['link'],
     );
     $form['link_path'] = array(
-      '#title' => t('Link path'),
+      '#title' => $this->t('Link path'),
       '#type' => 'textfield',
       '#field_prefix' => url(NULL, array('absolute' => TRUE)),
       '#default_value' => $data['link_path'],
@@ -146,7 +146,7 @@ class SectionTitleForm extends FormBase {
       ),
     );
     $form['paths'] = array(
-      '#title' => t('Paths'),
+      '#title' => $this->t('Paths'),
       '#type' => 'textarea',
       '#default_value' => $data['paths'],
       '#rows' => 4,
@@ -154,8 +154,8 @@ class SectionTitleForm extends FormBase {
     );
     $form['actions']['cancel'] = array(
       '#type' => 'link',
-      '#title' => t('Cancel'),
-      '#href' => 'admin/config/gsb/custom-section-title',
+      '#title' => $this->t('Cancel'),
+      '#route_name' => 'gsb_custom_section_title.configure',
       '#access' => $row !== '_new',
     );
     return $form;

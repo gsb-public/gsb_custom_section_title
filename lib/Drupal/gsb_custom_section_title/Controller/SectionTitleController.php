@@ -43,7 +43,7 @@ class SectionTitleController extends ControllerBase {
       $config = $this->config('gsb_custom_section_title.settings');
       $sections = $config->get('sections');
       unset($sections[$id]);
-      $config->set('sections', $sections);
+      $config->set('sections', $sections)->save();
       if ($js) {
         // If there are no more sections, remove the whole table.
         if (empty($sections)) {

@@ -32,7 +32,7 @@ function gsb_custom_section_title_permission() {
 /**
  * Implements hook_theme().
  */
-function gsb_custom_section_title_theme($existing, $type, $theme, $path) {
+function gsb_custom_section_title_theme() {
   return array(
     'gsb_custom_section_title_table' => array(
       'render element' => 'form',
