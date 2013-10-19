@@ -15,17 +15,6 @@ function theme_gsb_custom_section_title_table($variables) {
 }
 
 /**
- * Edits a section title.
- */
-function gsb_custom_section_title_edit_section($form, &$form_state) {
-  $section_id = str_replace('gsb-custom-section-title-', '', $form_state['triggering_element']['#name']);
-  $replacement = drupal_get_form('gsb_custom_section_title_form', $section_id);
-  $form['sections']['_new'] = $replacement['sections']['_new'];
-  $form['sections']['_new']['id']['#value'] = $section_id;
-  return $form['sections'];
-}
-
-/**
  * Deletes a section title.
  *
  * @param int $id

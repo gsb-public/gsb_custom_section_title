@@ -40,7 +40,7 @@ class SectionTitleTable extends FormBase {
         '#value' => t('Edit'),
         '#name' => "gsb-custom-section-title-$section_id",
         '#ajax' => array(
-          'callback' => 'gsb_custom_section_title_edit_section',
+          'callback' => array($this, 'editSection'),
           'wrapper' => 'gsb-custom-section-title-fieldset .fieldset-wrapper',
           'method' => 'html',
         ),
@@ -77,6 +77,17 @@ class SectionTitleTable extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, array &$form_state) {
+  }
+
+  /**
+   * Edits a section title.
+   */
+  public function editSection($form, &$form_state) {
+    $section_id = str_replace('gsb-custom-section-title-', '', $form_state['triggering_element']['#name']);
+    $replacement = drupal_get_form('Drupal\gsb_custom_section_title\Form\SectionTitleForm', $section_id);
+    $form['sections']['_new'] = $replacement['sections']['_new'];
+    $form['sections']['_new']['id']['#value'] = $section_id;
+    return $form['sections'];
   }
 
 }
