@@ -21,8 +21,8 @@ class SectionTitleController extends ControllerBase {
    */
   public function overview($section_id) {
     return array(
-      'table' => drupal_get_form('Drupal\gsb_custom_section_title\Form\SectionTitleTable'),
-      'section' => drupal_get_form('Drupal\gsb_custom_section_title\Form\SectionTitleForm', $section_id),
+      'table' => \Drupal::formBuilder()->getForm('Drupal\gsb_custom_section_title\Form\SectionTitleTable'),
+      'section' => \Drupal::formBuilder()->getForm('Drupal\gsb_custom_section_title\Form\SectionTitleForm', $section_id),
     );
   }
 
