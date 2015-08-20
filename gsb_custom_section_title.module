@@ -50,6 +50,31 @@ function gsb_custom_section_title_get_sections() {
 }
 
 /**
+ * Gets the custom section titles - with separated paths.
+ *
+ * @return array
+ *   An array of custom section titles - with separated paths (cause you "gotta keep'em separated").
+ */
+function gsb_custom_section_title_get_sections_separate_paths() {
+  $section_titles = gsb_custom_section_title_get_sections();
+  $titles_out = array();
+  foreach($section_titles as $title) {
+    $paths = explode("\r\n", $title['paths']);
+    foreach($paths as $single_path) {
+      $copy_title = $title;
+      $copy_title['paths'] = $single_path;
+      $titles_out[] = $copy_title;
+    }
+  }
+  usort($titles_out, "gsb_custom_section_title_get_sections_path_sort");
+  return $titles_out;
+}
+
+function gsb_custom_section_title_get_sections_path_sort($a, $b) {
+  return strnatcmp($b['paths'],$a['paths']);
+}
+
+/**
  * Gets the custom section title for a given key.
  *
  * @param int|string $key
